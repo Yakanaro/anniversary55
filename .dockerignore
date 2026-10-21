@@ -11,3 +11,4 @@ public/build
 public/hot
 .env.production
 bootstrap/cache/*.php
+certs

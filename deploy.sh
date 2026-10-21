@@ -14,13 +14,18 @@ if [ ! -f .env.production ]; then
     sed -i "s|^INVITATION_HOST_PASSWORD=.*|INVITATION_HOST_PASSWORD=$(openssl rand -hex 6)|" .env.production
 
     echo "Создан .env.production с сгенерированными секретами."
-    echo "Откройте его (nano .env.production), укажите APP_URL и при желании свой INVITATION_HOST_PASSWORD,"
+    echo "Откройте его (nano .env.production), укажите APP_URL (https://домен), DOMAIN (домен без https://) и при желании свой INVITATION_HOST_PASSWORD,"
     echo "затем запустите ./deploy.sh снова."
     exit 0
 fi
 
 if grep -q 'CHANGE-ME' .env.production; then
-    echo "В .env.production не заполнен APP_URL (осталось CHANGE-ME). Поправьте файл и запустите снова."
+    echo "В .env.production не заполнены APP_URL и DOMAIN (осталось CHANGE-ME). Поправьте файл и запустите снова."
+    exit 1
+fi
+
+if [ ! -f certs/fullchain.pem ] || [ ! -f certs/privkey.pem ]; then
+    echo "Нет сертификата: положите certs/fullchain.pem и certs/privkey.pem и запустите снова."
     exit 1
 fi
 

@@ -31,3 +31,5 @@ Thumbs.db
 /.agents
 /artifacts
 /.mcp.json
+/certs/*
+!/certs/.gitkeep
