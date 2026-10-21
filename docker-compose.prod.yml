@@ -24,9 +24,9 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      DOMAIN: ${DOMAIN:?set DOMAIN}
+      DOMAIN: ${DOMAIN:-_}
     volumes:
-      - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./docker/nginx/${NGINX_MODE:-https}.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./certs:/etc/nginx/certs:ro
     depends_on:
       - app
