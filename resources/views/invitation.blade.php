@@ -8,6 +8,7 @@
         'text' => $venue['search_query'],
     ]);
     $yandexMapsUrl = 'https://yandex.ru/maps/?'.http_build_query(['text' => $venue['search_query']]);
+    $chatUrl = config('invitation.chat_url');
     $twoGisUrl = 'https://2gis.ru/petrozavodsk/search/'.rawurlencode('переулок Репникова, 10');
 @endphp
 
@@ -57,12 +58,12 @@
         </section>
 
         <section class="wrap" id="map">
-            <h2>Как найти зал</h2>
-            <p class="lead">{{ $venue['address'] }}, район {{ $venue['district'] }}, {{ $venue['city'] }}. Постройте маршрут в навигаторе.</p>
+            <h2 class="center">Как найти зал</h2>
+            <p class="lead center">{{ $venue['address'] }}, район {{ $venue['district'] }}, {{ $venue['city'] }}. Постройте маршрут в навигаторе.</p>
             <div class="mapbox">
                 <iframe src="{{ $mapWidgetUrl }}" title="Карта: {{ $venue['search_query'] }}" loading="lazy" allowfullscreen></iframe>
             </div>
-            <div class="btns">
+            <div class="btns center">
                 <a class="btn" href="{{ $yandexMapsUrl }}" target="_blank" rel="noopener">Яндекс Карты</a>
                 <a class="btn o" href="{{ $twoGisUrl }}" target="_blank" rel="noopener">2ГИС</a>
             </div>
@@ -110,11 +111,27 @@
                             <div><small>Место</small><b data-ticket-seat>{{ $ticketGuest?->seat }}</b></div>
                             <div><small>Напиток</small><b data-ticket-drink>{{ $ticketGuest?->drink->label() }}</b></div>
                         </div>
-                        <a class="again" href="{{ route('invitation') }}#rsvp" data-again>Оформить ещё билет</a>
+                        <div class="issued-actions">
+                            @if ($chatUrl)
+                                <a class="btn" href="{{ $chatUrl }}" target="_blank" rel="noopener">В чат гостей</a>
+                            @endif
+                            <a class="again" href="{{ route('invitation') }}#rsvp" data-again>Оформить ещё билет</a>
+                        </div>
                     </div>
                 </div>
                 <div class="t-stub"><small>Контроль</small><b>★</b><small>{{ $date->format('d.m') }} · {{ $date->format('H:i') }}</small></div>
             </div>
         </section>
+
+        @if ($chatUrl)
+            <section class="wrap" id="chat">
+                <div class="foyer">
+                    <div class="k">Фойе</div>
+                    <h2>Чат гостей</h2>
+                    <p class="lead">Здесь до и после премьеры: новости, вопросы, кто с кем едет и, конечно, фотографии с праздника.</p>
+                    <a class="btn" href="{{ $chatUrl }}" target="_blank" rel="noopener">Войти в чат</a>
+                </div>
+            </section>
+        @endif
     </main>
 </x-layout>

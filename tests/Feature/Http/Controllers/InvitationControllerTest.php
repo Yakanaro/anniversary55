@@ -31,6 +31,26 @@ class InvitationControllerTest extends TestCase
         $response->assertDontSeeText('55');
     }
 
+    public function test_links_to_guest_chat_when_configured(): void
+    {
+        config(['invitation.chat_url' => 'https://t.me/+guest-chat']);
+
+        $response = $this->get(route('invitation'));
+
+        $response->assertSeeText('Чат гостей');
+        $response->assertSee('href="https://t.me/+guest-chat"', false);
+    }
+
+    public function test_hides_guest_chat_when_link_is_not_configured(): void
+    {
+        config(['invitation.chat_url' => null]);
+
+        $response = $this->get(route('invitation'));
+
+        $response->assertDontSeeText('Чат гостей');
+        $response->assertDontSeeText('В чат гостей');
+    }
+
     public function test_renders_issued_ticket_for_guest_who_signed_up_without_javascript(): void
     {
         $guest = Guest::factory()->create([
