@@ -12,3 +12,4 @@ public/hot
 .env.production
 bootstrap/cache/*.php
 certs
+backups
