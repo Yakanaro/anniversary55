@@ -29,7 +29,6 @@
                             <th>Билет</th>
                             <th>Гость</th>
                             <th>Напиток</th>
-                            <th>Ряд / место</th>
                             <th>Записался</th>
                             <th><span class="sr-only">Действия</span></th>
                         </tr>
@@ -40,7 +39,6 @@
                                 <td data-label="Билет">№ {{ $guest->id }}</td>
                                 <td data-label="Гость">{{ $guest->full_name }}</td>
                                 <td data-label="Напиток">{{ $guest->drink->label() }}</td>
-                                <td data-label="Ряд / место">{{ $guest->row }} / {{ $guest->seat }}</td>
                                 <td data-label="Записался">{{ $guest->created_at->timezone(config('invitation.timezone'))->format('d.m H:i') }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('guests.destroy', $guest) }}" onsubmit="return confirm({{ Js::from('Удалить '.$guest->full_name.' из списка?') }})">
