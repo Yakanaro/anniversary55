@@ -83,6 +83,18 @@ class GuestControllerTest extends TestCase
         $this->assertDatabaseCount('guests', 2);
     }
 
+    public function test_guest_can_choose_beer(): void
+    {
+        $response = $this->postJson(route('guests.store'), [
+            'first_name' => 'Анна',
+            'last_name' => 'Петрова',
+            'drink' => Drink::Beer->value,
+        ]);
+
+        $response->assertCreated();
+        $response->assertJsonPath('ticket.drink', 'Пиво');
+    }
+
     public function test_signup_without_javascript_redirects_back_to_ticket(): void
     {
         $response = $this->post(route('guests.store'), [

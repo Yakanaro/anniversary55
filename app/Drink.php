@@ -10,6 +10,7 @@ enum Drink: string
     case Vodka = 'vodka';
     case Cognac = 'cognac';
     case Whisky = 'whisky';
+    case Beer = 'beer';
     case NonAlcoholic = 'non_alcoholic';
 
     /**
@@ -24,6 +25,7 @@ enum Drink: string
             self::Vodka => 'Водка',
             self::Cognac => 'Коньяк',
             self::Whisky => 'Виски',
+            self::Beer => 'Пиво',
             self::NonAlcoholic => 'Безалкогольное',
         };
     }
